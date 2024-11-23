@@ -9,7 +9,7 @@ const errHandler = (err,req,res,next) => {
 }
 
 const err404Handler = (req,res,next) => {
-    return res.send({
+    return res.status(404).send({
         message : ".صفحه مورد نظر یافت نشد",
         error : "Not Found",
         statusCode : 404
