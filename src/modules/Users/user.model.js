@@ -12,15 +12,20 @@ const TransactionSchema = new Schema({
     orderID : {type : String}
 }, {timestamps : true});
 
+
 const UserSchema = new Schema({
     number : {type : String, required : true , unique : true},
+    otpCode : {
+        code : {type : String},
+        expiresIn : {type : Number, default : 0}
+    },
     email : {type : String },
     firstname : {type : String},
     lastname : {type : String},
     nationalCode : {type : String},
     birthday : {type : Date},
-    creditsInfo : [CreditSchema],
-    transaction : [TransactionSchema]
+    creditsInfo : {type : [CreditSchema]},
+    transaction : {type : [TransactionSchema]}
 
 })
 
