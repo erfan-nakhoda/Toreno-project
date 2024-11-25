@@ -5,5 +5,6 @@ module.exports =  AuthMessages = Object.freeze({
     OTPnotAvailable : "کد یک بار مصرف منقضی شده",
     NotFound : ".کاربر مورد نظر یافت نشد",
     OTPIncorrect : ".کد وارد شده اشتباه است",
-    VerifiedAlready : ".کاربر گرامی حساب شما قبلا تایید شده است"
+    LogOUTSuccess : ".شما با موفقیت از حساب کاربری خود خارج شدید",
+    alreadyLoggedIn : ".شما قبلا به حساب کاربری خود وارد شدید"
 })

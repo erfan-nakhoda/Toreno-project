@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken")
+require('dotenv').config();
 
 const TokenMaker = (payload) => {
     if(payload){
@@ -9,9 +10,9 @@ throw new Error("somthing went wrong")
 }
 
 const VerifyToken = (Token) => {
-    const Token = jwt.verify(Token, process.env.JWT_SERECTKEY);
-    if(! Token) throw new Error("Token is not valid");
-    return Token
+    const verifiedToken = jwt.verify(Token, process.env.JWT_SERECTKEY);
+    if(! verifiedToken) throw new Error("Token is not valid");
+    return verifiedToken;
 }
 
 module.exports = {

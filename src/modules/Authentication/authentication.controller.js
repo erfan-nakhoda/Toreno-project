@@ -2,6 +2,8 @@ const autoBind = require("auto-bind");
 const AuthService = require("./authentication.service");
 const createHttpError = require("http-errors");
 const AuthMessages = require("../../common/Messages/Auth.messages");
+const globalNames = require("../../common/globalNames/global.globalNames");
+const { TokenMaker, VerifyToken } = require("../../common/Token/Jwt.token");
 
 class AuthController {
     #service;
@@ -25,7 +27,9 @@ class AuthController {
     async CheckOTP(req,res,next) {
         try {
             const {code, number} = req.body;
-            await this.#service.CheckOTP(code, number);
+            const payload = await this.#service.CheckOTP(code, number);
+            const accessToken = TokenMaker(payload)
+            res.cookie(globalNames.access_Token, accessToken);
             return res.status(200).send({
                 message : AuthMessages.SuccessLogin,
                 statusCode : res.statusCode
@@ -36,7 +40,13 @@ class AuthController {
     }
     LogOut(req,res,next) {
         try {
-            
+            const {access_Token} = req.cookies;            
+            if(!access_Token) throw new createHttpError.NotFound(AuthMessages.NotFound);
+            res.clearCookie(globalNames.access_Token);
+            return res.status(200).send({
+                message : AuthMessages.LogOUTSuccess,
+                statusCode : res.statusCode
+            })
         } catch (err) {
             next(err)
         }

@@ -55,4 +55,10 @@
  *      responses:
  *          200:
  *              description : OK.
+ * /user/logout:
+ *  get:
+ *      summmary : user log out.
+ *      responses:
+ *          200:
+ *              description : ok.
  */

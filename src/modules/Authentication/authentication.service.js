@@ -28,14 +28,17 @@ class AuthService {
         
     }
     async CheckOTP(code, number) {
+        
         const user = await this.#Db.findOne({number});
         if(!user) throw new createHttpError.NotFound(AuthMessages.NotFound);
-        if(user?.IsVerified) throw new createHttpError.BadRequest(AuthMessages.VerifiedAlready)
-        if(user?.otpCode?.expiresIn < Date.now()) throw new createHttpError.BadRequest(AuthMessages.OTPnotAvailable);
+        console.log((user.otpCode.expiresIn - Date.now())/1000);
         if(user?.otpCode?.code != code) throw new createHttpError.BadRequest(AuthMessages.OTPIncorrect);
-        user.IsVerified = true;
-        await user.save();
-        return true;
+        if(user?.otpCode?.expiresIn < Date.now()) throw new createHttpError.BadRequest(AuthMessages.OTPnotAvailable);
+        if(!user?.IsVerified) {
+            user.IsVerified = true;
+            await user.save();
+        }
+        return {id : user.id};
     }
 }
 
