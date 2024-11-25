@@ -25,7 +25,8 @@ const UserSchema = new Schema({
     nationalCode : {type : String},
     birthday : {type : Date},
     creditsInfo : {type : [CreditSchema]},
-    transaction : {type : [TransactionSchema]}
+    transaction : {type : [TransactionSchema]},
+    IsVerified : {type : Boolean, default : false}
 
 })
 
