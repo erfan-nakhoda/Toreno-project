@@ -28,6 +28,6 @@ const UserSchema = new Schema({
     transaction : {type : [TransactionSchema]},
     IsVerified : {type : Boolean, default : false}
 
-})
+},{timestamps : true})
 
 module.exports = model("user",UserSchema);
