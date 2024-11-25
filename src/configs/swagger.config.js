@@ -11,7 +11,7 @@ module.exports =  swaggerConfig = (app) => {
                 description : "Tour management website apies"
             }
         },
-        apis : [`${process.cwd()}/modules/**/*.swagger.js`]
+        apis : [`${process.cwd()}/src/modules/**/*.swagger.js`]
     })
 
     app.use("/swagger",swaggerUi.serve,swaggerUi.setup(jsdoc), swaggerUi.serve);
