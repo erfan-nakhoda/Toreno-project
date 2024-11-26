@@ -1,4 +1,4 @@
-const {Schema, model} = require("mongoose");
+const {Schema, model, Types} = require("mongoose");
 
 const CreditSchema = new Schema ({
     creditNumber : {type : String},
@@ -25,9 +25,12 @@ const UserSchema = new Schema({
     nationalCode : {type : String},
     birthday : {type : Date},
     creditsInfo : {type : [CreditSchema]},
-    transaction : {type : [TransactionSchema]},
+    transaction : {type : [Types.ObjectId]},
     IsVerified : {type : Boolean, default : false}
 
 },{timestamps : true})
 
-module.exports = model("user",UserSchema);
+module.exports = {
+    userModel : model("user",UserSchema),
+    transactionModel : model('transaction', TransactionSchema)
+};

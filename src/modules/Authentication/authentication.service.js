@@ -1,5 +1,5 @@
 const autoBind = require("auto-bind");
-const userModel = require("../Users/user.model");
+const {userModel} = require("../Users/user.model");
 const crypto = require('crypto');
 const createHttpError = require("http-errors");
 const AuthMessages = require("../../common/Messages/Auth.messages");

@@ -1,4 +1,4 @@
-const userModel = require("../../modules/Users/user.model");
+const {userModel} = require("../../modules/Users/user.model");
 const AuthMessages = require("../Messages/Auth.messages");
 const { VerifyToken } = require("../Token/Jwt.token");
 
