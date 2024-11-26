@@ -3,12 +3,13 @@ const {Schema, model, Types} = require("mongoose");
 const CreditSchema = new Schema ({
     creditNumber : {type : String},
     shabaNumber : {type : String},
-    accountNumber : {type : String}
+    accountNumber : {type : String},
+
 })
 
 const TransactionSchema = new Schema({
     price : {type : String},
-    tourName : {type : String , ref : "tours"},
+    Name : {type : String },
     orderID : {type : String}
 }, {timestamps : true});
 
@@ -23,9 +24,12 @@ const UserSchema = new Schema({
     firstname : {type : String},
     lastname : {type : String},
     nationalCode : {type : String},
+    gender : {type : String, enum : ["male", "female"]},
     birthday : {type : Date},
+    myTours : {type : [Types.ObjectId], ref : "tours"},
     creditsInfo : {type : [CreditSchema]},
     transaction : {type : [Types.ObjectId]},
+    walletValue : {type : Number, default : 0},
     IsVerified : {type : Boolean, default : false}
 
 },{timestamps : true})
