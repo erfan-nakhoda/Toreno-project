@@ -10,7 +10,8 @@ const CreditSchema = new Schema ({
 const TransactionSchema = new Schema({
     price : {type : String},
     Name : {type : String },
-    orderID : {type : String}
+    orderID : {type : String},
+    userID : {type : Types.ObjectId, ref : "user"}
 }, {timestamps : true});
 
 
@@ -28,11 +29,12 @@ const UserSchema = new Schema({
     birthday : {type : Date},
     myTours : {type : [Types.ObjectId], ref : "tours"},
     creditsInfo : {type : [CreditSchema]},
-    transaction : {type : [Types.ObjectId]},
+    transaction : {type : [Types.ObjectId], ref : "transaction"},
     walletValue : {type : Number, default : 0},
     IsVerified : {type : Boolean, default : false}
 
 },{timestamps : true})
+
 
 module.exports = {
     userModel : model("user",UserSchema),

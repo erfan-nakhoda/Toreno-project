@@ -31,9 +31,11 @@
 
 /**
  * @swagger
- * /user/send-otp:
+ * /auth/send-otp:
  *  post:
  *      summary : send otp(one time password) to a user
+ *      tags:
+ *          -   Authentication
  *      requestBody :
  *          content:
  *              application/x-www-form-urlencoded:
@@ -44,9 +46,11 @@
  *              description : ok.
  *          201:
  *              description : created.
- * /user/check-otp:
+ * /auth/check-otp:
  *  post:
  *      summary : checking user's otp(one time password)
+ *      tags:
+ *          -   Authentication
  *      requestBody:
  *          content:
  *              application/x-www-form-urlencoded:
@@ -55,9 +59,11 @@
  *      responses:
  *          200:
  *              description : OK.
- * /user/logout:
+ * /auth/logout:
  *  get:
  *      summmary : user log out.
+ *      tags:
+ *          -   Authentication
  *      responses:
  *          200:
  *              description : ok.

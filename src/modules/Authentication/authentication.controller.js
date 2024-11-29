@@ -43,6 +43,7 @@ class AuthController {
             const {access_Token} = req.cookies;            
             if(!access_Token) throw new createHttpError.NotFound(AuthMessages.NotFound);
             res.clearCookie(globalNames.access_Token);
+            if(req.user) delete req.user;
             return res.status(200).send({
                 message : AuthMessages.LogOUTSuccess,
                 statusCode : res.statusCode
