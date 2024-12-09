@@ -30,12 +30,26 @@
  *              gender : 
  *                  type : string
  *                  enum : 
- *                      -   male
- *                      -   female
+ *                      -   مرد
+ *                      -   زن
  *              birthday:
  *                  type : date
- *                  format : DD/MM/YYYY
- *              
+ *                  format : YYYY-MM-DD
+ */
+
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      UpdateCreditInfo :
+ *            type : object
+ *            properties:
+ *               creditNumber:
+ *                  type : string
+ *               shabaNumber : 
+ *                  type : string
+ *               accountNumber:
+ *                  type : string
  */
 
 /**
@@ -62,7 +76,7 @@
  *          200 : 
  *              description : Ok.
  * 
- * /user/update:
+ * /user/update-info:
  *  put:
  *      summary : update or insert user's personal information,
  *      tags:
@@ -75,4 +89,18 @@
  *      responses:
  *          200:
  *              description : Ok
+ * 
+ * /user/update-credit-info:
+ *  put:
+ *      summary : update or insert user's credit info
+ *      tags:
+ *          -   Users
+ *      requestBody:
+ *          content:
+ *              application/x-www-form-urlencoded:
+ *                  schema:
+ *                      $ref:  "#/components/schemas/UpdateCreditInfo"
+ *      responses:
+ *          200:
+ *              description : Ok.
  */

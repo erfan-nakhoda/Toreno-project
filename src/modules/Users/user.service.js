@@ -4,6 +4,7 @@ const createHttpError = require('http-errors');
 const { transactionModel } = require("./user.model");
 const crypto = require('crypto');
 const {userModel} = require("./user.model");
+const tourMessages = require("../../common/Messages/Tour.messages");
 
 
 class UserService {
@@ -15,13 +16,22 @@ class UserService {
     
     async UpdateInfo(userDto,id){
         if(userDto) {
-            await this.#Db.updateOne({_id : id}, userDto);
+            await this.#Db.updateOne({_id : id}, {personalInfo :userDto});
             return true;            
         }
         throw new createHttpError.BadRequest(".لطفا اطلاعات مورد نظر را برای ویرایش پر کنید");
     }
-
+    async UpdateCreditInfo(user,updateDto) {
+        if(updateDto){
+             await this.#Db.updateOne({_id : user.id}, {creditsInfo : updateDto});
+             return true
+        }
+        throw new createHttpError.BadRequest(".لطفا اطلاعات مورد نظر را برای ویرایش پر کنید")
+    }
     async deposit(amount, user){
+        console.log(user.creditsInfo);
+        
+        if(user.creditsInfo.creditNumber){
         if(typeof +amount == "number" && amount > 0) {
             user.walletValue += +amount;
             const orderID = crypto.randomInt(100000, 999999);
@@ -35,9 +45,12 @@ class UserService {
             
             user.transaction.push(transaction.id);
             await user.save();
-            return true;
+            return true;}
+            throw new createHttpError.BadRequest(UserMessages.amountIncorrect);
+            
         }
-        throw new createHttpError.BadRequest(UserMessages.amountIncorrect);
+        throw new createHttpError.BadRequest(UserMessages.CreditDataMiss);
+        
         
     }
 }
