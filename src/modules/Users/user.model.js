@@ -11,7 +11,7 @@ const CreditSchema = new Schema({
 }, {_id : 0})
 
 const TransactionSchema = new Schema({
-    price: { type: String },
+    price: { type: Number },
     Name: { type: String },
     orderID: { type: String },
     userID: { type: Types.ObjectId, ref: "user" }
@@ -50,7 +50,7 @@ const UserSchema = new Schema({
 }, { timestamps: true })
 
 function autoPopulate(next) {
-    this.populate('transaction');
+    this.populate('transaction',{__v : 0, createdAt : 0 , updatedAt : 0, userID : 0, _id : 0});
     // this.populate('myTours');
     next();
 }

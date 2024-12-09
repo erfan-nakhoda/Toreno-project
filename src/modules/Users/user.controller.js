@@ -13,7 +13,7 @@ class UserController {
   async getProfile(req,res,next) {
     try {
         return res.status(200).send({
-            user : await req.user.populate("transaction", {__v : 0, createdAt : 0 , updatedAt : 0, userID : 0, _id : 0}),
+            user : await req.user,
             statusCode : res.statusCode
         })
     } catch (err) {

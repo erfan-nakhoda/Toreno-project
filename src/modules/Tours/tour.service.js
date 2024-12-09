@@ -86,7 +86,7 @@ class TourService {
         if(filterObj.departingTime) {
             let {departingTime, ...rest} = filterObj;
             
-            tours = await this.#Db.find(Object.assign({"tourTime.departingTime" : departingTime}, rest))
+            tours = await this.#Db.find(Object.assign({"tourTime.departingTime" : departingTime}, rest, {capacity : {$gte : 1}}))
             
             if(tours.length == 0) throw new createHttpError.NotFound(tourMessages.NotFound);
             return tours;
