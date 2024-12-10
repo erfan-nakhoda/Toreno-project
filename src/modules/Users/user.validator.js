@@ -1,23 +1,21 @@
-const createHttpError = require("http-errors");
 const moment = require("jalali-moment");
 const Joi = require("joi");
-const UserMessages = require("../../common/Messages/User.messages");
 
 const UpdateJoiSchema = Joi.object({
     firstname : Joi.string().min(3).max(20),
     lastname : Joi.string().min(3).max(25),
-    email : Joi.string().email(),
+    email : Joi.string().email().message(".ایمیل وارد شده اشتباه است"),
     nationalCode : Joi.number().min(11),
     gender : Joi.string().valid("زن", "مرد"),
-    birthday : Joi.string().custom((value, helper) => {
+    birthDate : Joi.string().custom((value, helper) => {
         if(!moment(value, "jYYYY-jMM-jDD").isValid()) return helper.message(".تاریخ وارد شده معتبر نیست");
-        return moment(value,"jYYYY-jMM-jDD").locale("en").startOf("day").toDate();
+        return moment(value,"jYYYY-jMM-jDD").utc().startOf("day").add(1,"day").toISOString();
     })
 })
 
 const UpdateCreditSchema = Joi.object({
     creditNumber : Joi.string().pattern(/^[0-9]{16}$/).rule({message : ".شماره کارت باید 16 رقم باشد"}),
-    shabaNumber : Joi.string().pattern(/^IR[0-9]{24}$/),
+    shabaNumber : Joi.string().pattern(/^IR[0-9]{24}$/).message(".شماره شبا ی وارد شده معتبر نیست"),
     accountNumber : Joi.string(),
 })
 

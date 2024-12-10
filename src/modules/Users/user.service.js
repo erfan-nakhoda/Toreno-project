@@ -15,7 +15,9 @@ class UserService {
     }
     
     async UpdateInfo(userDto,id){
-        if(userDto) {
+        console.log(userDto);
+        
+        if(Object.keys(userDto).length) {
             await this.#Db.updateOne({_id : id}, {personalInfo :userDto});
             return true;            
         }
@@ -28,10 +30,8 @@ class UserService {
         }
         throw new createHttpError.BadRequest(".لطفا اطلاعات مورد نظر را برای ویرایش پر کنید")
     }
-    async deposit(amount, user){
-        console.log(user.creditsInfo);
-        
-        if(user.creditsInfo.creditNumber){
+    async deposit(amount, user){      
+        if(user.creditsInfo?.creditNumber){
         if(typeof +amount == "number" && amount > 0) {
             user.walletValue += +amount;
             const orderID = crypto.randomInt(100000, 999999);

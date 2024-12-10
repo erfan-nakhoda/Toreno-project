@@ -12,11 +12,11 @@ const TourCreateValidationSchema = Joi.object({
     departingTime: Joi.string().required().custom((value, helper) => {
         const now = moment().startOf("day");
         
-        const enteredDate = moment(value, "jYYYY-jMM-jDD", true);
+        const enteredDate = moment(value, "jYYYY-jMM-jDD", true).startOf('day');
 
         if (!enteredDate.isValid()) return helper.message(".تاریخ وارد شده اشتباه است")
         if (!enteredDate.isSameOrAfter(now)) return helper.message(".تاریخ وارد شده امکان پذیر نیست لطفا دوباره وارد کنید");
-        return enteredDate.utc().startOf("day").toISOString(false);
+        return enteredDate.utc().startOf("day").add(1,"day").toISOString(false);
 
     }),
     arrivalTime: Joi.string().required().custom((value, helper) => {
@@ -25,7 +25,7 @@ const TourCreateValidationSchema = Joi.object({
 
         if (!enteredDate.isValid() || !departingTime.isValid()) return helper.message(".تاریخ وارد شده اشتباه است");
         if (!enteredDate.isAfter(departingTime)) return helper.message("..تاریخ وارد شده امکان پذیر نیست لطفا دوباره وارد کنید");
-        return enteredDate.utc().startOf("day").toISOString(false);
+        return enteredDate.utc().startOf("day").add(1,"day").toISOString();
     }),
     insuranceType: Joi.string()
 })
@@ -57,10 +57,9 @@ const TourFilterValidationSchema = Joi.object({
     origin : Joi.string(),
     destination : Joi.string(),
     departingTime : Joi.string().custom((value,helper) =>{
-        if(!moment(value, "jYYYY-jMM-jDD").isValid()) return helper.message(".تاریخ وارد شده معتبر نیست");
-        console.log(moment().startOf("day"));
+        if(!(moment(value, "jYYYY-jMM-jDD", true).isValid())) return helper.message(".تاریخ وارد شده معتبر نیست");
         
-        return moment(value, "jYYYY-jMM-jDD").utc().startOf('day').toISOString(false)
+        return moment(value, "jYYYY-jMM-jDD").utc().startOf('day').add(1,"day").toISOString()
     })
 })
 

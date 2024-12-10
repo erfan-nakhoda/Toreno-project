@@ -31,7 +31,6 @@ class AuthService {
         
         const user = await this.#Db.findOne({number});
         if(!user) throw new createHttpError.NotFound(AuthMessages.NotFound);
-        console.log((user.otpCode.expiresIn - Date.now())/1000);
         if(user?.otpCode?.code != code) throw new createHttpError.BadRequest(AuthMessages.OTPIncorrect);
         if(user?.otpCode?.expiresIn < Date.now()) throw new createHttpError.BadRequest(AuthMessages.OTPnotAvailable);
         if(!user?.IsVerified) {

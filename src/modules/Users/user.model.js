@@ -56,6 +56,7 @@ function autoPopulate(next) {
 }
 
 UserSchema.pre("find", autoPopulate);
+UserSchema.pre('findOne', autoPopulate)
 module.exports = {
     userModel: model("user", UserSchema),
     transactionModel: model('transaction', TransactionSchema)

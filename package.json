@@ -19,10 +19,7 @@
     "jalali-moment": "^3.3.11",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
-    "moment-jalaali": "^0.10.4",
-    "moment-jalali": "^0.3.9",
     "mongoose": "^8.8.2",
-    "omit-empty": "^1.0.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   }

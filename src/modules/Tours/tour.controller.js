@@ -16,7 +16,7 @@ class TourController {
             const tours = await this.#service.getTours();
             
             res.status(200).send({
-                message : tours,
+                data : tours,
                 statusCode : res.statusCode
             })
         } catch (err) {

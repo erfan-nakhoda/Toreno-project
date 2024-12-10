@@ -1,4 +1,5 @@
-const {Schema, model, Types} = require("mongoose");
+const moment = require("jalali-moment");
+const {Schema, model} = require("mongoose");
 
 const tourTimeSchema = new Schema({
     departingTime : {type : Date},
@@ -16,7 +17,7 @@ const TourSchema = new Schema({
     tourTime : {type : tourTimeSchema, required : true},
     insuranceType : {type : String, default : "بیمه 50 هزار دیناری"}
 
-})
+});
 
 
 module.exports = model("tour", TourSchema);

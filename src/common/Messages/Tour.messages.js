@@ -7,7 +7,8 @@ const tourMessages = Object.freeze({
     NotEnoughBalance : ".موجود کیف پول شما کافی نمی باشد",
     SuccessBuy : ".تور مورد نظر با موفقیت برای شما رزرو شد",
     NotEnoughCapacity  : ".ظرفیت تور پر شده است",
-    SuccessDelete : ".تور مورد نظر با موفقیت حذف شد"
+    SuccessDelete : ".تور مورد نظر با موفقیت حذف شد",
+    ExpiredDepartingTime :".تاریخ رفت تور مورد نظر گذشته است"
 })
 
 module.exports = tourMessages;

@@ -12,7 +12,7 @@ const filterTransactionsValidateSchema = Joi.object({
     date : Joi.string().custom((value,helper) => {
         const date = moment(value,"jYYYY-jMM-jDD")
         if(!date.isValid()) return helper.message(".تاریخ وارد شده معتبر نمی باشد")
-        return date.locale('en').startOf('day').utc().toISOString();
+        return date.utc().startOf('day').add(1,"day").toISOString();
     })
 });
 const filterUsersValidateSchema = Joi.object({

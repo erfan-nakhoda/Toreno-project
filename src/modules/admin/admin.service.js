@@ -23,7 +23,7 @@ class adminService {
         let { date, ...rest } = filterObj;
         const OneDayAfterDate = moment(date).add(1, "day");
 
-        let createdAt = { createdAt: { $gte: date, $lte: OneDayAfterDate } };
+        let createdAt = { createdAt: { $gte: date, $lt: OneDayAfterDate } };
         if (!date) createdAt = null;
 
         const transactions = await this.#transactionDb.find(Object.assign(rest, createdAt));

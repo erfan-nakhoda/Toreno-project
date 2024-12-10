@@ -4,7 +4,6 @@ const createHttpError = require("http-errors");
 const tourMessages = require("../../common/Messages/Tour.messages");
 const moment = require("jalali-moment");
 const { transactionModel } = require("../Users/user.model")
-const { isValidObjectId } = require("mongoose");
 const { randomInt } = require("crypto")
 
 class TourService {
@@ -20,6 +19,7 @@ class TourService {
         const now = moment().utc().startOf("day").toISOString(false);
         
         const tours = await this.#Db.find({ "tourTime.departingTime": { $gte: now } }, { __v: 0 });
+        if(tours.length == 0) throw new createHttpError(400, "توری برای امروز و یا روز های آتی یافت نشد");
 
         return tours;
     }
@@ -55,12 +55,12 @@ class TourService {
         return true;
     }
     async BuyTours(tourID, user, passengerInfo) {
-        console.log(user);
-        
+        const now = moment().utc().startOf("day").toISOString(false);        
         let tour = await this.#Db.findOne({ tourID: tourID });
         if (!tour) throw new createHttpError.NotFound(tourMessages.NotFound);
-        if (!(user.walletValue >= tour.price)) throw new createHttpError.NotAcceptable(tourMessages.NotEnoughBalance);
+        if(moment(tour.tourTime?.departingTime).isBefore(now)) throw new createHttpError.BadRequest(tourMessages.ExpiredDepartingTime);
         if (tour.capacity == 0) throw new createHttpError.NotAcceptable(tourMessages.NotEnoughCapacity);
+        if (!(user.walletValue >= tour.price)) throw new createHttpError.NotAcceptable(tourMessages.NotEnoughBalance);
         user.myTours = {passengerInfo, tourInfo : tour.id}
         const transaction = await this.#transactionDb.create({
             Name: `${tour.tourName} ثبت نام`,
@@ -85,9 +85,8 @@ class TourService {
         let tours = [];
         if(filterObj.departingTime) {
             let {departingTime, ...rest} = filterObj;
-            
-            tours = await this.#Db.find(Object.assign({"tourTime.departingTime" : departingTime}, rest, {capacity : {$gte : 1}}))
-            
+            const dayAfterDepartingTime = moment(departingTime).add(1, "day").toISOString();
+            tours = await this.#Db.find(Object.assign({"tourTime.departingTime" : {$gte : departingTime , $lt : dayAfterDepartingTime}}, rest, {capacity : {$gte : 1}}))
             if(tours.length == 0) throw new createHttpError.NotFound(tourMessages.NotFound);
             return tours;
         }
@@ -108,3 +107,4 @@ class TourService {
 }
 
 module.exports = new TourService()
+

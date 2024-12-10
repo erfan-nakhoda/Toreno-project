@@ -32,9 +32,10 @@
  *                  enum : 
  *                      -   مرد
  *                      -   زن
- *              birthday:
+ *              birthDate:
  *                  type : date
  *                  format : YYYY-MM-DD
+ *                  example : 1403-9-18
  */
 
 /**
